@@ -46,34 +46,38 @@ window.DEMO_RECORDS = {
     }
   },
   "M2X8TD": {
-    equip: "2-9/16\" 5,000 psi Dual Completion Xmas Tree",
-    tagId: "M2X8TD", serial: "XT-5K-11302",
-    status: "wip", statusText: "IN WORKSHOP", statusSub: "Currently: painting · expected out w/c 24 Nov 2026",
-    fields: [["Size / rating", "2-9/16\" 5K"], ["Specification", "API 6A, PSL 2"],
-             ["Temp. class", "L-U"], ["Material class", "DD-NL"],
-             ["Previous cert.", "Expired Jun 2026"], ["Received", "28 Oct 2026"]],
-    photo: "img/tree-green.jpg", photoCaption: "Photographed on arrival, 28 Oct 2026",
+    equip: "3 Tonne Lifting Sling, 2 m",
+    tagId: "M2X8TD", serial: "LS-3T-00417",
+    status: "ok", statusText: "IN DATE · OK TO USE", statusSub: "Next thorough examination due 04 May 2027",
+    fields: [["Type", "Polyester round sling"], ["Standard", "BS EN 1492-2"],
+             ["WLL (straight lift)", "3,000 kg"], ["WLL (choke / basket)", "2,400 / 6,000 kg"],
+             ["Effective length", "2.0 m"], ["Colour code", "Yellow (3 t)"],
+             ["Last examined", "04 Nov 2026"], ["Next exam due", "04 May 2027"],
+             ["Exam report no.", "TE-26-0942", true]],
+    photo: null, photoCaption: "",
     mrp: {
       workorders: [
-        ["WO-26-3517", "28 Oct 2026", "Strip, refurbish, re-certify", "Open"],
-        ["WO-22-0954", "11 May 2022", "Re-certification", "Closed"]
+        ["WO-26-3602", "04 Nov 2026", "6-monthly thorough examination (LOLER)", "Closed"],
+        ["WO-26-1877", "06 May 2026", "6-monthly thorough examination (LOLER)", "Closed"],
+        ["WO-25-3014", "05 Nov 2025", "New sling: register, tag and examine", "Closed"]
       ],
       history: [
-        ["10 Nov 2026", "Moved to paint shop", "Paint shop"],
-        ["05 Nov 2026", "Blasted, NDT: minor pitting on flange face, within limits", "Blast shop"],
-        ["31 Oct 2026", "Stripped and inspected, 2 wing valves need new seats", "Bay 2"],
-        ["28 Oct 2026", "Received from offshore, tagged M2X8TD", "Goods in"]
+        ["10 Nov 2026", "Issued to Bay 4 for tree lift", "Lifting store"],
+        ["04 Nov 2026", "Thorough examination passed, report TE-26-0942", "Lifting store"],
+        ["06 May 2026", "Thorough examination passed, report TE-26-0418", "Lifting store"],
+        ["12 Feb 2026", "Pre-use check: cover scuffed, within limits, kept in service", "Bay 2"],
+        ["05 Nov 2025", "Received new, examined and tagged M2X8TD", "Goods in"]
       ],
       certs: [
-        ["CoC-22-0711", "Certificate of Conformance", "18 May 2022", "Expired"]
+        ["TE-26-0942", "Report of thorough examination (LOLER)", "04 Nov 2026", "Valid"],
+        ["TE-26-0418", "Report of thorough examination (LOLER)", "06 May 2026", "Superseded"],
+        ["DoC-25-0417", "Manufacturer's Declaration of Conformity", "28 Oct 2025", "Valid"]
       ],
-      spares: [
-        ["GSK-2916-5K", "Gate & seat kit, 2-9/16\" 5K", "2 reserved", "3 in stock"],
-        ["RX-27", "Ring gasket RX-27", "6 reserved", "30 in stock"]
-      ],
+      spares: [],
       procedures: [
-        ["UP-WH-101", "Xmas tree strip & inspection", "Rev 7"],
-        ["UP-PA-010", "Surface prep & coating spec P-3", "Rev 3"]
+        ["UP-LE-001", "Lifting accessory pre-use check", "Rev 5"],
+        ["UP-LE-010", "Textile slings: use, storage & discard criteria", "Rev 2"],
+        ["UP-QA-005", "Quarantine & non-conformance handling", "Rev 2"]
       ]
     }
   },
