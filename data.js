@@ -142,21 +142,21 @@ window.DEMO_RECORDS = {
   "RPCYXU": {
     equip: "High Pressure Hydraulic Hose, 3/8\" Pioneer Male x 3/8\" Pioneer Female",
     tagId: "RPCYXU", serial: "HH-38-02175",
-    status: "ok", statusText: "TESTED · OK TO USE", statusSub: "Proof tested 05 Nov 2026 · replace by Nov 2031",
-    fields: [["Hose", "2-wire braid, EN 853 2SN"], ["Bore", "3/8\" (DN10)"],
+    status: "ok", statusText: "TESTED · OK TO USE", statusSub: "Proof tested 05 Nov 2026 · replace by Q1 2029",
+    fields: [["Hose", "Thermoplastic, Enerpac 700 series"], ["Bore", "1/4\" (6.4 mm)"],
              ["End A", "3/8\" Pioneer male (tip)"], ["End B", "3/8\" Pioneer female (coupler)"],
-             ["Working pressure", "330 bar (4,785 psi)"], ["Proof tested", "660 bar, 05 Nov 2026"],
-             ["Length", "2.0 m"], ["Made up", "Nov 2026"],
+             ["Working pressure", "700 bar (10,000 psi)"], ["Proof tested", "1,050 bar, 05 Nov 2026"],
+             ["Length", "1.8 m (6 ft)"], ["Hose date code", "1Q24"],
              ["Test certificate", "HT-26-0388", true]],
-    photo: null, photoCaption: "",
+    photo: "img/hose-RPCYXU.jpg", photoCaption: "Photographed in the hose store, 11 Nov 2026",
     mrp: {
       workorders: [
-        ["WO-26-3571", "04 Nov 2026", "Make up hose assembly, proof test, tag", "Closed"]
+        ["WO-26-3571", "04 Nov 2026", "Fit 3/8\" Pioneer couplings, proof test, tag", "Closed"]
       ],
       history: [
         ["06 Nov 2026", "Issued to Bay 2 test rig", "Hose store"],
-        ["05 Nov 2026", "Proof test 660 bar, 2 min hold: no leaks. Certificate HT-26-0388", "Test bay 1"],
-        ["04 Nov 2026", "Hose cut, cleaned, couplings crimped (crimp dia. checked)", "Hose shop"],
+        ["05 Nov 2026", "Proof test 1,050 bar, 2 min hold: no leaks. Certificate HT-26-0388", "Test bay 1"],
+        ["04 Nov 2026", "Pioneer male & female couplings fitted, dust caps on, bend restrictors checked", "Hose shop"],
         ["04 Nov 2026", "Assembly registered, tagged RPCYXU", "Hose shop"]
       ],
       certs: [
@@ -164,13 +164,13 @@ window.DEMO_RECORDS = {
         ["MC-26-1140", "Hose manufacturer's certificate of conformity", "12 Sep 2026", "Valid"]
       ],
       spares: [
-        ["HS-2SN-06", "Hose, 3/8\" EN 853 2SN (m)", "2.0 used", "48 m in stock"],
+        ["HC-700-6", "Hose, 700 bar thermoplastic, 1.8 m", "1 used", "7 in stock"],
         ["PC-38-M", "Pioneer coupling 3/8\" male tip", "1 used", "14 in stock"],
         ["PC-38-F", "Pioneer coupling 3/8\" female", "1 used", "9 in stock"],
         ["DC-38-PI", "Dust caps, 3/8\" Pioneer (pair)", "1 used", "30 in stock"]
       ],
       procedures: [
-        ["UP-HY-020", "Hydraulic hose assembly make-up & crimping", "Rev 6"],
+        ["UP-HY-020", "High pressure hose assembly & coupling fitting", "Rev 6"],
         ["UP-HY-025", "Hose assembly proof testing", "Rev 4"],
         ["UP-HY-030", "Hose inspection & replacement criteria", "Rev 2"]
       ]
