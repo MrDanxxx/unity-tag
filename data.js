@@ -54,7 +54,7 @@ window.DEMO_RECORDS = {
              ["Effective length", "2.0 m"], ["Colour code", "Yellow (3 t)"],
              ["Last examined", "04 Nov 2026"], ["Next exam due", "04 May 2027"],
              ["Exam report no.", "TE-26-0942", true]],
-    photo: null, photoCaption: "",
+    photo: "img/strap-M2X8TD.jpg", photoCaption: "Photographed in the lifting store, 11 Nov 2026",
     mrp: {
       workorders: [
         ["WO-26-3602", "04 Nov 2026", "6-monthly thorough examination (LOLER)", "Closed"],
