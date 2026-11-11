@@ -1,7 +1,7 @@
 // SAMPLE DATA ONLY (demo).
 // In the real system both pages would fetch this from Unity's server:
 // the public fields for anyone, the MRP tabs only after sign-in.
-// Photos: Wikimedia Commons placeholders (credited in index.html footer) until real workshop photos arrive.
+// Photos: 7F3K9Q Wikimedia placeholder (credited in index.html); M2X8TD and VFHRDH are real photos.
 window.DEMO_RECORDS = {
   "7F3K9Q": {
     equip: "2-1/16\" 5,000 psi Xmas Tree Assembly",
@@ -97,6 +97,46 @@ window.DEMO_RECORDS = {
       certs: [["NCR-26-077", "Non-conformance report", "03 Nov 2026", "Open"]],
       spares: [],
       procedures: [["UP-QA-005", "Quarantine & non-conformance handling", "Rev 2"]]
+    }
+  },
+  "VFHRDH": {
+    equip: "Wellhead Crossover, 3-1/2\" EUE Box x 2-7/8\" EUE Pin",
+    tagId: "VFHRDH", serial: "CR5749",
+    status: "ok", statusText: "CERTIFIED · READY TO SHIP", statusSub: "Packed for dispatch · certificate valid until 06 Nov 2027",
+    fields: [["Type", "Threaded crossover"], ["Connections", "3-1/2\" EUE box x 2-7/8\" EUE pin"],
+             ["Working pressure", "5,000 psi"], ["Specification", "API 6A, PSL 2"],
+             ["Material class", "AA"], ["Temp. class", "P-U"],
+             ["Weight", "38 kg"], ["Pressure tested", "06 Nov 2026"],
+             ["Certificate no.", "CoC-26-1207", true]],
+    photo: "img/crossover-VFHRDH.jpg", photoCaption: "Packed on pallet for dispatch, 11 Nov 2026",
+    mrp: {
+      workorders: [
+        ["WO-26-3544", "29 Oct 2026", "Inspect, re-thread check, test, re-certify", "Closed"],
+        ["WO-24-2210", "14 Aug 2024", "Re-certification", "Closed"]
+      ],
+      history: [
+        ["11 Nov 2026", "Wrapped, strapped to pallet, thread protectors fitted", "Despatch"],
+        ["07 Nov 2026", "Painted (Unity blue), serial and weight stencilled", "Paint shop"],
+        ["06 Nov 2026", "Hydrostatic body test passed, CoC-26-1207 issued", "Test bay 2"],
+        ["03 Nov 2026", "Threads gauged (box and pin): within tolerance", "QC"],
+        ["31 Oct 2026", "Cleaned and inspected, MPI on body: no defects", "Bay 3"],
+        ["29 Oct 2026", "Received from client, tagged VFHRDH", "Goods in"]
+      ],
+      certs: [
+        ["CoC-26-1207", "Certificate of Conformance", "06 Nov 2026", "Valid"],
+        ["PT-26-1207", "Pressure test certificate", "06 Nov 2026", "Pass"],
+        ["TG-26-1207", "Thread gauge report", "03 Nov 2026", "Pass"],
+        ["CoC-24-0893", "Certificate of Conformance", "21 Aug 2024", "Expired"]
+      ],
+      spares: [
+        ["TP-312-EUE", "Thread protector, 3-1/2\" EUE box", "1 used", "22 in stock"],
+        ["TP-278-EUE", "Thread protector, 2-7/8\" EUE pin", "1 used", "17 in stock"]
+      ],
+      procedures: [
+        ["UP-XO-030", "Crossover inspection & thread gauging", "Rev 3"],
+        ["UP-PT-200", "Hydrostatic body & seat testing (API 6A)", "Rev 9"],
+        ["UP-DS-015", "Packing & dispatch of wellhead components", "Rev 4"]
+      ]
     }
   }
 };
