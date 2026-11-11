@@ -138,5 +138,42 @@ window.DEMO_RECORDS = {
         ["UP-DS-015", "Packing & dispatch of wellhead components", "Rev 4"]
       ]
     }
+  },
+  "RPCYXU": {
+    equip: "High Pressure Hydraulic Hose, 3/8\" Pioneer Male x 3/8\" Pioneer Female",
+    tagId: "RPCYXU", serial: "HH-38-02175",
+    status: "ok", statusText: "TESTED · OK TO USE", statusSub: "Proof tested 05 Nov 2026 · replace by Nov 2031",
+    fields: [["Hose", "2-wire braid, EN 853 2SN"], ["Bore", "3/8\" (DN10)"],
+             ["End A", "3/8\" Pioneer male (tip)"], ["End B", "3/8\" Pioneer female (coupler)"],
+             ["Working pressure", "330 bar (4,785 psi)"], ["Proof tested", "660 bar, 05 Nov 2026"],
+             ["Length", "2.0 m"], ["Made up", "Nov 2026"],
+             ["Test certificate", "HT-26-0388", true]],
+    photo: null, photoCaption: "",
+    mrp: {
+      workorders: [
+        ["WO-26-3571", "04 Nov 2026", "Make up hose assembly, proof test, tag", "Closed"]
+      ],
+      history: [
+        ["06 Nov 2026", "Issued to Bay 2 test rig", "Hose store"],
+        ["05 Nov 2026", "Proof test 660 bar, 2 min hold: no leaks. Certificate HT-26-0388", "Test bay 1"],
+        ["04 Nov 2026", "Hose cut, cleaned, couplings crimped (crimp dia. checked)", "Hose shop"],
+        ["04 Nov 2026", "Assembly registered, tagged RPCYXU", "Hose shop"]
+      ],
+      certs: [
+        ["HT-26-0388", "Hose assembly proof test certificate", "05 Nov 2026", "Pass"],
+        ["MC-26-1140", "Hose manufacturer's certificate of conformity", "12 Sep 2026", "Valid"]
+      ],
+      spares: [
+        ["HS-2SN-06", "Hose, 3/8\" EN 853 2SN (m)", "2.0 used", "48 m in stock"],
+        ["PC-38-M", "Pioneer coupling 3/8\" male tip", "1 used", "14 in stock"],
+        ["PC-38-F", "Pioneer coupling 3/8\" female", "1 used", "9 in stock"],
+        ["DC-38-PI", "Dust caps, 3/8\" Pioneer (pair)", "1 used", "30 in stock"]
+      ],
+      procedures: [
+        ["UP-HY-020", "Hydraulic hose assembly make-up & crimping", "Rev 6"],
+        ["UP-HY-025", "Hose assembly proof testing", "Rev 4"],
+        ["UP-HY-030", "Hose inspection & replacement criteria", "Rev 2"]
+      ]
+    }
   }
 };
