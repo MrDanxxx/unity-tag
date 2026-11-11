@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Equipment Record</title>
+<link rel="icon" href="img/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!--
+  DEMO - equipment tag landing page (sample data).
+  The NFC tag holds ONE web link ending in the item's random tag ID:
+    https://<host>/#7F3K9Q
+  The real page would fetch the PUBLIC fields for that ID from Unity's server.
+  Sample data lives in data.js. All record text is shown with textContent only.
+-->
+</head>
+<body>
+<div class="demo-bar">DEMO · SAMPLE DATA</div>
+<header>
+  <img src="img/logo.svg" alt="Unity" width="209" height="71">
+</header>
+
+<main>
+  <section class="intro">
+    <h1>Equipment record</h1>
+    <p>This item is maintained and certified by Unity. Basic details are shown below. Full records are available to authorised users.</p>
+  </section>
+
+  <div id="record" aria-live="polite">
+    <section class="card"><div class="empty">Reading the tag…</div></section>
+  </div>
+
+  <div class="buttons">
+    <a class="btn btn-primary" id="auth" href="auth.html">
+      <span>Links<small>Certificates and documents for this item</small></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+    </a>
+    <a class="btn btn-dark" href="https://www.unitywell.com/">
+      <span>Visit Unity<small>unitywell.com</small></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#41b6e6" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+    </a>
+    <a class="btn btn-line" id="mail" href="mailto:enquiries@unitywell.com">
+      <span>Report a problem with this item<small>enquiries@unitywell.com · +44 (0)1224 937 600</small></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#41b6e6" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+    </a>
+  </div>
+
+  <p class="note">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
+    <span>The stamped serial number on the equipment is the official identification. Always check it matches the serial shown here before relying on this record.</span>
+  </p>
+
+  <p class="demo-pick">Demo records:
+    <a href="#7F3K9Q">Certified</a>·<a href="#M2X8TD">In workshop</a>·<a href="#Q9WL4C">Quarantined</a>·<a href="#ZZZZZZ">Unknown tag</a>
+  </p>
+
+  <footer>Unity · Dyce, Aberdeen · Demo with sample data<br>Sample photos via Wikimedia Commons: HartmannValves (CC BY 3.0), public domain</footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var RECORDS = window.DEMO_RECORDS;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function render() {
+    var box = document.getElementById("record");
+    box.textContent = "";
+    var id = location.hash.replace(/^#/, "").toUpperCase();
+    var r = RECORDS[id];
+    document.getElementById("auth").href = "auth.html" + (r ? "#" + r.tagId : "");
+
+    if (!r) {
+      var c = el("section", "card");
+      c.appendChild(el("div", "empty", id
+        ? "Tag " + id + " is not registered with Unity. Please contact us using the details below."
+        : "No tag ID was found. Please scan the tag again, or contact Unity below."));
+      box.appendChild(c);
+      document.title = "Equipment Record";
+      document.getElementById("mail").href = "mailto:enquiries@unitywell.com";
+      return;
+    }
+    document.title = r.equip + " · " + r.serial;
+
+    // Identity + status + public details
+    var card = el("section", "card");
+    var ident = el("div", "ident");
+    ident.appendChild(el("div", "label", "Equipment"));
+    ident.appendChild(el("div", "equip", r.equip));
+    var ids = el("div", "ids");
+    [["Serial no.", r.serial], ["Tag ID", r.tagId]].forEach(function (p) {
+      var d = el("div"); d.appendChild(el("span", "label", p[0])); d.appendChild(el("b", null, p[1])); ids.appendChild(d);
+    });
+    ident.appendChild(ids);
+    card.appendChild(ident);
+
+    var st = el("div", "status s-" + r.status);
+    st.appendChild(el("span", "dot"));
+    var stt = el("div"); stt.appendChild(el("span", "txt", r.statusText)); stt.appendChild(el("small", null, r.statusSub));
+    st.appendChild(stt);
+    card.appendChild(st);
+
+    var dl = el("dl");
+    r.fields.forEach(function (f) {
+      var row = el("div", "row" + (f[2] ? " wide" : ""));
+      row.appendChild(el("dt", null, f[0]));
+      row.appendChild(el("dd", null, f[1]));
+      dl.appendChild(row);
+    });
+    card.appendChild(dl);
+    box.appendChild(card);
+
+    // Photo
+    var pc = el("section", "card photo");
+    if (r.photo) {
+      var img = el("img");
+      img.src = r.photo;
+      img.alt = r.equip;
+      img.loading = "lazy";
+      pc.appendChild(img);
+      pc.appendChild(el("div", "caption", r.photoCaption));
+    } else {
+      pc.appendChild(el("div", "nophoto", "No photo on file for this item"));
+    }
+    box.appendChild(pc);
+
+    document.getElementById("mail").href = "mailto:enquiries@unitywell.com?subject=" +
+      encodeURIComponent("Equipment " + r.serial + " (tag " + r.tagId + ")");
+  }
+
+  if (!location.hash) { try { history.replaceState(null, "", "#7F3K9Q"); } catch (e) {} }
+  render();
+  window.addEventListener("hashchange", function () { render(); window.scrollTo(0, 0); });
+})();
+</script>
+</body>
+</html>

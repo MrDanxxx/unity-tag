@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Links</title>
+<link rel="icon" href="img/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!--
+  DEMO - authorised users view (sample data).
+  Open to all viewers. Certificates tab is public; the other tabs need a
+  sign-in (real system: company account single sign-on). This demo has NO
+  login and collects nothing; the "sign in" button just reveals sample data.
+-->
+</head>
+<body>
+<div class="demo-bar">DEMO · SAMPLE DATA</div>
+<header>
+  <img src="img/logo.svg" alt="Unity" width="209" height="71">
+</header>
+
+<main class="wide-main">
+  <section class="intro">
+    <h1>Links</h1>
+    <p>Documents for this item from the Unity MRP system. Certificates are open to everyone. Other records need a sign-in.</p>
+  </section>
+
+  <a class="back" id="back" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg>
+    Back to equipment record
+  </a>
+
+  <div id="app" aria-live="polite"></div>
+
+  <footer>Unity · Dyce, Aberdeen · Demo with sample data</footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var RECORDS = window.DEMO_RECORDS;
+  var signedIn = false;
+  var currentTab = "certs";
+
+  var TABS = [
+    { key: "certs", name: "Certificates", open: true,
+      row: function (r) { return [r[0] + " · " + r[1], "Issued " + r[2], r[3], statusCls(r[3]), true]; } },
+    { key: "workorders", name: "Work orders",
+      row: function (r) { return [r[0], r[2] + " · opened " + r[1], r[3], statusCls(r[3])]; } },
+    { key: "history", name: "History",
+      row: function (r) { return [r[1], r[0] + " · " + r[2], "", ""]; } },
+    { key: "spares", name: "Spares",
+      row: function (r) { return [r[0] + " · " + r[1], r[2], r[3], "tag-dim"]; } },
+    { key: "procedures", name: "Procedures",
+      row: function (r) { return [r[0] + " · " + r[1], r[2], "Open", "", true]; } }
+  ];
+
+  function statusCls(s) {
+    s = s.toLowerCase();
+    if (s === "closed" || s === "pass" || s === "valid") return "tag-ok";
+    if (s === "open") return "tag-open";
+    if (s === "expired" || s === "on hold") return "tag-bad";
+    return "tag-dim";
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function summaryCard(r) {
+    var c = el("section", "card");
+    var s = el("div", "summary");
+    if (r.photo) { var i = el("img"); i.src = r.photo; i.alt = ""; s.appendChild(i); }
+    else s.appendChild(el("div", "thumb"));
+    var who = el("div", "who");
+    who.appendChild(el("b", null, r.equip));
+    who.appendChild(el("span", null, "Serial " + r.serial + " · Tag " + r.tagId + " "));
+    var short = r.status === "ok" ? "CERTIFIED" : r.status === "wip" ? "IN WORKSHOP" : "QUARANTINED";
+    who.appendChild(el("span", "pill " + r.status, short));
+    s.appendChild(who);
+    c.appendChild(s);
+    return c;
+  }
+
+  var LOCK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+  function signInBox(what) {
+    var g = el("div", "signin");
+    g.insertAdjacentHTML("beforeend",
+      '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#41b6e6" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>');
+    g.appendChild(el("h2", null, "Sign in to view " + what.toLowerCase()));
+    g.appendChild(el("p", null, "Unity staff and approved client users sign in with their company account. What you can see depends on your role."));
+    var b = el("button", "btn btn-primary");
+    b.type = "button";
+    b.appendChild(el("span", null, "Sign in with company account"));
+    b.addEventListener("click", function () { signedIn = true; render(); });
+    g.appendChild(b);
+    g.appendChild(el("div", "demo-note", "Demo: no login. The button just shows the sample records."));
+    return g;
+  }
+
+  function render() {
+    var app = document.getElementById("app");
+    app.textContent = "";
+    var id = location.hash.replace(/^#/, "").toUpperCase();
+    var r = RECORDS[id];
+    document.getElementById("back").href = "index.html" + (id ? "#" + id : "");
+
+    if (!r) {
+      var c = el("section", "card");
+      c.appendChild(el("div", "empty", "No equipment selected. Scan the item's tag, then choose Links."));
+      app.appendChild(c);
+      return;
+    }
+    document.title = "Links · " + r.serial;
+    app.appendChild(summaryCard(r));
+
+    var card = el("section", "card");
+    var tabs = el("div", "tabs");
+    tabs.setAttribute("role", "tablist");
+    TABS.forEach(function (t) {
+      var btn = el("button");
+      btn.type = "button";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", String(t.key === currentTab));
+      btn.appendChild(document.createTextNode(t.name));
+      if (t.open || signedIn) btn.appendChild(el("span", "n", String((r.mrp[t.key] || []).length)));
+      else { var lk = el("span", "lk"); lk.innerHTML = LOCK; lk.title = "Sign in required"; btn.appendChild(lk); }
+      btn.addEventListener("click", function () { currentTab = t.key; render(); });
+      tabs.appendChild(btn);
+    });
+    card.appendChild(tabs);
+
+    var tab = TABS.filter(function (t) { return t.key === currentTab; })[0];
+    var rows = r.mrp[tab.key] || [];
+    var head = el("div", "panel-head");
+    head.appendChild(el("span", null, tab.name));
+    head.appendChild(el("span", tab.open ? "src" : "src locked", tab.open ? "Open to all" : (signedIn ? "Signed in" : "Sign-in required")));
+    card.appendChild(head);
+
+    if (!tab.open && !signedIn) {
+      card.appendChild(signInBox(tab.name));
+    } else if (!rows.length) {
+      card.appendChild(el("div", "empty", "No " + tab.name.toLowerCase() + " recorded for this item."));
+    } else {
+      var ul = el("ul", "items");
+      rows.forEach(function (row) {
+        var v = tab.row(row);
+        var li = el("li");
+        var m = el("div", "main");
+        m.appendChild(el("b", null, v[0]));
+        m.appendChild(el("span", null, v[1]));
+        li.appendChild(m);
+        var side = el("div", "side " + (v[3] || ""));
+        if (v[4]) {
+          var a = el("a", null, v[2] === "Open" ? "Open PDF" : v[2] + " · PDF");
+          a.href = "#" + r.tagId;
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            alert("Demo: this would open the document from the MRP / document system.");
+          });
+          side.appendChild(a);
+        } else if (v[2]) {
+          side.textContent = v[2];
+        }
+        li.appendChild(side);
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+    }
+    app.appendChild(card);
+  }
+
+  render();
+  window.addEventListener("hashchange", function () { signedIn = false; currentTab = "certs"; render(); });
+})();
+</script>
+</body>
+</html>
